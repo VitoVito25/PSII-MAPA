@@ -56,4 +56,13 @@ public class Cliente {
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
+
+    public void excluirCliente() {
+        int idClienteExcluido = this.id;
+        this.id = 0;
+        this.nome = null;
+        this.email = null;
+        this.telefone = null;
+        System.out.println("Cliente com id " + idClienteExcluido + " excluídos com sucesso.");
+    }
 }
