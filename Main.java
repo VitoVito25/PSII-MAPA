@@ -12,6 +12,8 @@ import java.util.Scanner;
  */
 public class Main {
    
+
+
     /**
      * Função para limpar o console
      * 
@@ -67,7 +69,7 @@ public class Main {
                     option = scanner.nextInt();
                     scanner.nextLine();
 
-                    if(option >= 5 && option >= 1 && option != 9) {
+                    if(option >= 5 && option <= 1 && option != 9) {
                         System.out.println("Você inseriu uma opção invalida, por favor verifique a opção.");
                         scanner.nextLine();
                         clearConsole();
@@ -240,7 +242,7 @@ public class Main {
                                 }
     
                             }while(idEncontradoExclusao == false);
-                            
+
                             clienteParaExclusao.imprimirCliente();
                             listaClientes.remove(clienteParaExclusao);
                             System.out.println("Cliente com id " + idExcluir + " excluído com sucesso.");
@@ -249,8 +251,61 @@ public class Main {
 
                         }
 
-                            break;
-                
+                        idEncontradoExclusao = false;
+                        clienteParaExclusao = null;
+                        idExcluir = 0;
+
+                        break;
+
+                    case 5:
+
+                        clearConsole();
+                        boolean idBuscaEncontrado = false;
+                        Cliente clienteParaBusca = null;
+                        int idBusca = 0;
+                        System.out.println("#---- Busca de cliente ----#");
+                        
+                        // Verifica se a lista esta vazia
+                        if (listaClientes.isEmpty()) {
+                            System.out.println("Nenhum cliente cadastrado.");
+                            System.out.println("#---- Pressione ENTER para voltar ao Menu ----#");
+                            scanner.nextLine();
+                        } else {
+                            do{
+                                try {
+                                    // Solicita os dados
+                                    System.out.println("Informe o ID do cliente que você deseja encontrar: ");
+                                    idBusca =  scanner.nextInt();
+                                    scanner.nextLine();
+    
+                                    // Verifica se o Id esta cadastrado
+                                    for(Cliente cliente : listaClientes) {
+                                        if(cliente.getId() == idBusca) {
+                                            idBuscaEncontrado = true;
+                                            clienteParaBusca = cliente;
+                                        }
+                                    }
+    
+                                    if(idBuscaEncontrado == false) {
+                                        System.out.printf("Cliente com o Id %d nao encontrado. Insira um novo Id \n", idBusca);
+                                    }
+    
+                                } catch (InputMismatchException e) {
+                                    System.out.println("Caracter invalido, por favor clique ENTER e insira um numero");
+                                    scanner.nextLine();
+                                }
+    
+                            }while(idBuscaEncontrado == false);
+
+                            clienteParaBusca.imprimirCliente();
+                            System.out.println("#---- Pressione ENTER para voltar ao Menu ----#");
+                            scanner.nextLine();
+
+                        }
+
+                        break;
+                        
+                    // Nao vai cair em default
                     default:
                         break;
                 }
