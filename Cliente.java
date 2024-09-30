@@ -57,6 +57,11 @@ public class Cliente {
         this.telefone = telefone;
     }
 
+    public void imprimirCliente() {
+        System.out.printf("Id: %d - Nome: %s - Email: %s - Telefone: %s \n",
+        this.id, this.nome, this.email, this.telefone);
+    }
+
     public void excluirCliente() {
         int idClienteExcluido = this.id;
         this.id = 0;

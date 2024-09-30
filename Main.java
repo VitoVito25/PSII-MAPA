@@ -105,7 +105,17 @@ public class Main {
 
                         System.out.printf("Cliente com o id %d inserido com sucesso!\n", id);
                         scanner.nextLine();
+                        break;
+                    
+                    case 2:
                         clearConsole();
+                        System.out.println("#---- Listagem de clientes cadastrados ----#");
+                        for(Cliente cliente : listaClientes){
+                            cliente.imprimirCliente();
+                        }
+
+                        System.out.println("#---- Pressione ENTER para voltar ao Menu ----#");
+                        scanner.nextLine();
                         break;
 
                     
