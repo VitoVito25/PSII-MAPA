@@ -36,7 +36,7 @@ public class Main {
         }
     }
 
-        /**
+    /**
      * Função main para rodar programa CRUD dos clientes
      * 
      * 
@@ -83,228 +83,21 @@ public class Main {
 
                 switch (option) {
                     case 1:
-                        clearConsole();
-                        // Solicita os dados
-                        System.out.println("#---- Cadastro de clientes ----#");
-                        System.out.println("Insira o nome do Cliente: ");
-                        String nome = scanner.nextLine();
-                        System.out.println("Insira o email do Cliente: ");
-                        String email = scanner.nextLine();
-                        System.out.println("Insira o telefone do Cliente: ");
-                        String telefone = scanner.nextLine();
-
-                        // Puxa o Id mais alto cadastrado
-                        int lastId = 0;
-                        for (Cliente cliente : listaClientes) {
-                            if (cliente.getId() > lastId) {
-                                lastId = cliente.getId(); 
-                            }
-                        }
-                        // Atribui um novo ID
-                        int id = lastId + 1;
-
-                        // Gera o novo cliente e coloca na lista
-                        Cliente newCliente = new Cliente(id, nome, email, telefone);
-                        listaClientes.add(newCliente);
-
-                        System.out.printf("Cliente com o id %d inserido com sucesso!\n", id);
-                        scanner.nextLine();
+                        cadastrarCliente(scanner, listaClientes);
                         break;
-                    
                     case 2:
-                        clearConsole();
-                        
-                        // Verifica se a lista esta vazia
-                        if (listaClientes.isEmpty()) {
-                            System.out.println("Nenhum cliente cadastrado.");
-                        } else {
-                            for (Cliente cliente : listaClientes) {
-                                cliente.imprimirCliente();
-                            }
-                        }
-
-                        System.out.println("#---- Pressione ENTER para voltar ao Menu ----#");
-                        scanner.nextLine();
+                        listarClientes(scanner, listaClientes);
                         break;
-
                     case 3:
-                        clearConsole();
-                        boolean idEncontrado = false;
-                        Cliente clienteEncontrado = null;
-                        int idEditar = 0;
-                        System.out.println("#---- Atualização de clientes ----#");
-                        
-                        // Verifica se a lista esta vazia
-                        if (listaClientes.isEmpty()) {
-                            System.out.println("Nenhum cliente cadastrado.");
-                            System.out.println("#---- Pressione ENTER para voltar ao Menu ----#");
-                            scanner.nextLine();
-                        } else {
-                            do{
-                                try {
-                                    // Solicita os dados
-                                    System.out.println("Informe o ID do cliente que você deseja editar: ");
-                                    idEditar =  scanner.nextInt();
-                                    scanner.nextLine();
-    
-                                    // Verifica se o Id esta cadastrado
-                                    for(Cliente cliente : listaClientes) {
-                                        if(cliente.getId() == idEditar) {
-                                            idEncontrado = true;
-                                            clienteEncontrado = cliente;
-                                        }
-                                    }
-    
-                                    if(idEncontrado == false) {
-                                        System.out.printf("Cliente com o Id %d nao encontrado. Insira um novo Id \n", idEditar);
-                                    }
-    
-                                } catch (InputMismatchException e) {
-                                    System.out.println("Caracter invalido, por favor clique ENTER e insira um numero");
-                                    scanner.nextLine();
-                                }
-    
-    
-                            }while(idEncontrado == false);
-    
-                            clearConsole();
-                            System.out.println("#---- Atualização de clientes ----#");
-                            System.out.println("Cliente encontrado: ");
-                            clienteEncontrado.imprimirCliente();
-                            System.out.printf("Insira os novos dados para o cliente com Id %d ", idEditar);
-                            
-                            System.out.print("Digite o novo nome (ou deixe em branco para manter o atual): ");
-                            String novoNome = scanner.nextLine();
-                            if (!novoNome.isEmpty()) {
-                                clienteEncontrado.setNome(novoNome);
-                            }
-    
-                            System.out.print("Digite o novo email (ou deixe em branco para manter o atual): ");
-                            String novoEmail = scanner.nextLine();
-                            if (!novoEmail.isEmpty()) {
-                                clienteEncontrado.setEmail(novoEmail);
-                            }
-    
-                            System.out.print("Digite o novo telefone (ou deixe em branco para manter o atual): ");
-                            String novoTelefone = scanner.nextLine();
-                            if (!novoTelefone.isEmpty()) {
-                                clienteEncontrado.setTelefone(novoTelefone);
-                            }
-     
-                            System.out.println("Dados do cliente atualizados com sucesso!");
-                            clienteEncontrado.imprimirCliente();
-                            System.out.println("Pressione ENTER para continuar...");
-                            scanner.nextLine();
-
-                        }
-
-                        idEncontrado = false;
-                        clienteEncontrado = null;
-                        idEditar = 0;
-
+                        atualizarCliente(scanner, listaClientes);
                         break;
                     case 4:
-
-                        clearConsole();
-                        boolean idEncontradoExclusao = false;
-                        Cliente clienteParaExclusao = null;
-                        int idExcluir = 0;
-                        System.out.println("#---- Exclusão de clientes ----#");
-                        
-                        // Verifica se a lista esta vazia
-                        if (listaClientes.isEmpty()) {
-                            System.out.println("Nenhum cliente cadastrado.");
-                            System.out.println("#---- Pressione ENTER para voltar ao Menu ----#");
-                            scanner.nextLine();
-                        } else {
-                            do{
-                                try {
-                                    // Solicita os dados
-                                    System.out.println("Informe o ID do cliente que você deseja excluir: ");
-                                    idExcluir =  scanner.nextInt();
-                                    scanner.nextLine();
-    
-                                    // Verifica se o Id esta cadastrado
-                                    for(Cliente cliente : listaClientes) {
-                                        if(cliente.getId() == idExcluir) {
-                                            idEncontradoExclusao = true;
-                                            clienteParaExclusao = cliente;
-                                        }
-                                    }
-    
-                                    if(idEncontradoExclusao == false) {
-                                        System.out.printf("Cliente com o Id %d nao encontrado. Insira um novo Id \n", idExcluir);
-                                    }
-    
-                                } catch (InputMismatchException e) {
-                                    System.out.println("Caracter invalido, por favor clique ENTER e insira um numero");
-                                    scanner.nextLine();
-                                }
-    
-                            }while(idEncontradoExclusao == false);
-
-                            clienteParaExclusao.imprimirCliente();
-                            listaClientes.remove(clienteParaExclusao);
-                            System.out.println("Cliente com id " + idExcluir + " excluído com sucesso.");
-                            System.out.println("#---- Pressione ENTER para voltar ao Menu ----#");
-                            scanner.nextLine();
-
-                        }
-
-                        idEncontradoExclusao = false;
-                        clienteParaExclusao = null;
-                        idExcluir = 0;
-
+                        excluirCliente(scanner, listaClientes);
                         break;
-
                     case 5:
-
-                        clearConsole();
-                        boolean idBuscaEncontrado = false;
-                        Cliente clienteParaBusca = null;
-                        int idBusca = 0;
-                        System.out.println("#---- Busca de cliente ----#");
+                        buscaCliente(scanner, listaClientes);
                         
-                        // Verifica se a lista esta vazia
-                        if (listaClientes.isEmpty()) {
-                            System.out.println("Nenhum cliente cadastrado.");
-                            System.out.println("#---- Pressione ENTER para voltar ao Menu ----#");
-                            scanner.nextLine();
-                        } else {
-                            do{
-                                try {
-                                    // Solicita os dados
-                                    System.out.println("Informe o ID do cliente que você deseja encontrar: ");
-                                    idBusca =  scanner.nextInt();
-                                    scanner.nextLine();
-    
-                                    // Verifica se o Id esta cadastrado
-                                    for(Cliente cliente : listaClientes) {
-                                        if(cliente.getId() == idBusca) {
-                                            idBuscaEncontrado = true;
-                                            clienteParaBusca = cliente;
-                                        }
-                                    }
-    
-                                    if(idBuscaEncontrado == false) {
-                                        System.out.printf("Cliente com o Id %d nao encontrado. Insira um novo Id \n", idBusca);
-                                    }
-    
-                                } catch (InputMismatchException e) {
-                                    System.out.println("Caracter invalido, por favor clique ENTER e insira um numero");
-                                    scanner.nextLine();
-                                }
-    
-                            }while(idBuscaEncontrado == false);
-
-                            clienteParaBusca.imprimirCliente();
-                            System.out.println("#---- Pressione ENTER para voltar ao Menu ----#");
-                            scanner.nextLine();
-
-                        }
-
                         break;
-                        
                     // Nao vai cair em default
                     default:
                         break;
@@ -318,5 +111,222 @@ public class Main {
 
     }
 
+    public static int localizarUltimoId(List<Cliente> listaClientes) {
 
+        // Puxa o Id mais alto cadastrado
+        int lastId = 0;
+        for (Cliente cliente : listaClientes) {
+            if (cliente.getId() > lastId) {
+                lastId = cliente.getId(); 
+            }
+        }
+        return lastId;
+    }
+
+    public static void cadastrarCliente(Scanner scanner, List<Cliente> listaClientes){
+
+        clearConsole();
+        // Solicita os dados
+        System.out.println("#---- Cadastro de clientes ----#");
+        System.out.println("Insira o nome do Cliente: ");
+        String nome = scanner.nextLine();
+        System.out.println("Insira o email do Cliente: ");
+        String email = scanner.nextLine();
+        System.out.println("Insira o telefone do Cliente: ");
+        String telefone = scanner.nextLine();
+
+        int lastId = localizarUltimoId(listaClientes);
+        // Atribui um novo ID
+        int id = lastId + 1;
+
+        // Gera o novo cliente e coloca na lista
+        Cliente newCliente = new Cliente(id, nome, email, telefone);
+        listaClientes.add(newCliente);
+
+        System.out.printf("Cliente com o id %d inserido com sucesso!\n", id);
+        scanner.nextLine();
+
+    }
+
+    public static void listarClientes(Scanner scanner, List<Cliente> listaClientes) {
+
+        clearConsole();                  
+        // Verifica se a lista esta vazia
+        if (listaClientes.isEmpty()) {
+            System.out.println("Nenhum cliente cadastrado.");
+        } else {
+            for (Cliente cliente : listaClientes) {
+                cliente.imprimirCliente();
+            }
+        }
+
+        System.out.println("#---- Pressione ENTER para voltar ao Menu ----#");
+        scanner.nextLine();
+
+    }
+
+    public static void atualizarCliente(Scanner scanner, List<Cliente> listaClientes) {
+        clearConsole();
+        boolean idEncontrado = false;
+        Cliente clienteEncontrado = null;
+        int idEditar = 0;
+        System.out.println("#---- Atualização de clientes ----#");
+        
+        // Verifica se a lista esta vazia
+        if (listaClientes.isEmpty()) {
+            System.out.println("Nenhum cliente cadastrado.");
+            System.out.println("#---- Pressione ENTER para voltar ao Menu ----#");
+            scanner.nextLine();
+        } else {
+            do{
+                try {
+                    // Solicita os dados
+                    System.out.println("Informe o ID do cliente que você deseja editar: ");
+                    idEditar =  scanner.nextInt();
+                    scanner.nextLine();
+
+                    // Verifica se o Id esta cadastrado
+                    for(Cliente cliente : listaClientes) {
+                        if(cliente.getId() == idEditar) {
+                            idEncontrado = true;
+                            clienteEncontrado = cliente;
+                        }
+                    }
+
+                    if(idEncontrado == false) {
+                        System.out.printf("Cliente com o Id %d nao encontrado. Insira um novo Id \n", idEditar);
+                    }
+
+                } catch (InputMismatchException e) {
+                    System.out.println("Caracter invalido, por favor clique ENTER e insira um numero");
+                    scanner.nextLine();
+                }
+
+
+            }while(idEncontrado == false);
+
+            clearConsole();
+            System.out.println("#---- Atualização de clientes ----#");
+            System.out.println("Cliente encontrado: ");
+            clienteEncontrado.imprimirCliente();
+            System.out.printf("Insira os novos dados para o cliente com Id %d ", idEditar);
+            
+            System.out.print("Digite o novo nome (ou deixe em branco para manter o atual): ");
+            String novoNome = scanner.nextLine();
+            if (!novoNome.isEmpty()) {
+                clienteEncontrado.setNome(novoNome);
+            }
+
+            System.out.print("Digite o novo email (ou deixe em branco para manter o atual): ");
+            String novoEmail = scanner.nextLine();
+            if (!novoEmail.isEmpty()) {
+                clienteEncontrado.setEmail(novoEmail);
+            }
+
+            System.out.print("Digite o novo telefone (ou deixe em branco para manter o atual): ");
+            String novoTelefone = scanner.nextLine();
+            if (!novoTelefone.isEmpty()) {
+                clienteEncontrado.setTelefone(novoTelefone);
+            }
+
+            System.out.println("Dados do cliente atualizados com sucesso!");
+            clienteEncontrado.imprimirCliente();
+            System.out.println("Pressione ENTER para continuar...");
+            scanner.nextLine();
+
+        }
+    }
+
+    public static void excluirCliente(Scanner scanner, List<Cliente> listaClientes) {
+        clearConsole();
+        boolean idEncontradoExclusao = false;
+        Cliente clienteParaExclusao = null;
+        int idExcluir = 0;
+        System.out.println("#---- Exclusão de clientes ----#");
+        
+        // Verifica se a lista esta vazia
+        if (listaClientes.isEmpty()) {
+            System.out.println("Nenhum cliente cadastrado.");
+            System.out.println("#---- Pressione ENTER para voltar ao Menu ----#");
+            scanner.nextLine();
+        } else {
+            do{
+                try {
+                    // Solicita os dados
+                    System.out.println("Informe o ID do cliente que você deseja excluir: ");
+                    idExcluir =  scanner.nextInt();
+                    scanner.nextLine();
+
+                    // Verifica se o Id esta cadastrado
+                    for(Cliente cliente : listaClientes) {
+                        if(cliente.getId() == idExcluir) {
+                            idEncontradoExclusao = true;
+                            clienteParaExclusao = cliente;
+                        }
+                    }
+
+                    if(idEncontradoExclusao == false) {
+                        System.out.printf("Cliente com o Id %d nao encontrado. Insira um novo Id \n", idExcluir);
+                    }
+
+                } catch (InputMismatchException e) {
+                    System.out.println("Caracter invalido, por favor clique ENTER e insira um numero");
+                    scanner.nextLine();
+                }
+
+            }while(idEncontradoExclusao == false);
+
+            clienteParaExclusao.imprimirCliente();
+            listaClientes.remove(clienteParaExclusao);
+            System.out.println("Cliente com id " + idExcluir + " excluído com sucesso.");
+            System.out.println("#---- Pressione ENTER para voltar ao Menu ----#");
+            scanner.nextLine();
+
+        }
+    }
+
+    public static void buscaCliente(Scanner scanner, List<Cliente> listaClientes) {
+        clearConsole();
+        boolean idBuscaEncontrado = false;
+        Cliente clienteParaBusca = null;
+        int idBusca = 0;
+        System.out.println("#---- Busca de cliente ----#");
+        
+        // Verifica se a lista esta vazia
+        if (listaClientes.isEmpty()) {
+            System.out.println("Nenhum cliente cadastrado.");
+            System.out.println("#---- Pressione ENTER para voltar ao Menu ----#");
+            scanner.nextLine();
+        } else {
+            do{
+                try {
+                    // Solicita os dados
+                    System.out.println("Informe o ID do cliente que você deseja encontrar: ");
+                    idBusca =  scanner.nextInt();
+                    scanner.nextLine();
+
+                    // Verifica se o Id esta cadastrado
+                    for(Cliente cliente : listaClientes) {
+                        if(cliente.getId() == idBusca) {
+                            idBuscaEncontrado = true;
+                            clienteParaBusca = cliente;
+                        }
+                    }
+
+                    if(idBuscaEncontrado == false) {
+                        System.out.printf("Cliente com o Id %d nao encontrado. Insira um novo Id \n", idBusca);
+                    }
+
+                } catch (InputMismatchException e) {
+                    System.out.println("Caracter invalido, por favor clique ENTER e insira um numero");
+                    scanner.nextLine();
+                }
+
+            }while(idBuscaEncontrado == false);
+
+            clienteParaBusca.imprimirCliente();
+            System.out.println("#---- Pressione ENTER para voltar ao Menu ----#");
+            scanner.nextLine();
+        }
+    }
 }
