@@ -11,8 +11,6 @@ import java.util.Scanner;
  * @version 1.0
  */
 public class Main {
-   
-
 
     /**
      * Função para limpar o console
@@ -69,14 +67,14 @@ public class Main {
                     option = scanner.nextInt();
                     scanner.nextLine();
 
-                    if(option >= 5 && option <= 1 && option != 9) {
+                    if((option >= 5 || option <= 1) && option != 9) {
                         System.out.println("Você inseriu uma opção invalida, por favor verifique a opção.");
                         scanner.nextLine();
                         clearConsole();
                     }
 
                 }catch (InputMismatchException e) {
-                    System.out.println("Você inseriu um caracter invalido, pressione um numero");
+                    System.out.println("Você inseriu um caracter invalido, insira um numero");
                     scanner.nextLine();
                     clearConsole();
                 }
@@ -111,6 +109,13 @@ public class Main {
 
     }
 
+    /**
+     * Função para localizar qual o ultimo Id cadastrado
+     * 
+     * 
+     * @author Victor Renaud
+     * @version 1.0
+     */
     public static int localizarUltimoId(List<Cliente> listaClientes) {
 
         // Puxa o Id mais alto cadastrado
@@ -123,6 +128,13 @@ public class Main {
         return lastId;
     }
 
+    /**
+     * Função para cadastrar clientes
+     * 
+     * 
+     * @author Victor Renaud
+     * @version 1.0
+     */
     public static void cadastrarCliente(Scanner scanner, List<Cliente> listaClientes){
 
         clearConsole();
@@ -148,6 +160,13 @@ public class Main {
 
     }
 
+    /**
+     * Função para listar clientes
+     * 
+     * 
+     * @author Victor Renaud
+     * @version 1.0
+     */
     public static void listarClientes(Scanner scanner, List<Cliente> listaClientes) {
 
         clearConsole();                  
@@ -165,6 +184,13 @@ public class Main {
 
     }
 
+    /**
+     * Função atualizar um cliente
+     * 
+     * 
+     * @author Victor Renaud
+     * @version 1.0
+     */
     public static void atualizarCliente(Scanner scanner, List<Cliente> listaClientes) {
         clearConsole();
         boolean idEncontrado = false;
@@ -237,6 +263,13 @@ public class Main {
         }
     }
 
+    /**
+     * Função para excluir um cliente
+     * 
+     * 
+     * @author Victor Renaud
+     * @version 1.0
+     */
     public static void excluirCliente(Scanner scanner, List<Cliente> listaClientes) {
         clearConsole();
         boolean idEncontradoExclusao = false;
@@ -285,6 +318,13 @@ public class Main {
         }
     }
 
+    /**
+     * Função para buscar um cliente por id especifico
+     * 
+     * 
+     * @author Victor Renaud
+     * @version 1.0
+     */
     public static void buscaCliente(Scanner scanner, List<Cliente> listaClientes) {
         clearConsole();
         boolean idBuscaEncontrado = false;
