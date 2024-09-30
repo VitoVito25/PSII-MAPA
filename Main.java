@@ -66,13 +66,15 @@ public class Main {
                     System.out.println("Pressione a opção desejada");
                     option = scanner.nextInt();
                     scanner.nextLine();
+
+                    if(option >= 5 && option >= 1 && option != 9) {
+                        System.out.println("Você inseriu uma opção invalida, por favor verifique a opção.");
+                        scanner.nextLine();
+                        clearConsole();
+                    }
+
                 }catch (InputMismatchException e) {
                     System.out.println("Você inseriu um caracter invalido, pressione um numero");
-                    scanner.nextLine();
-                    clearConsole();
-                }
-                if(option >= 5 && option >= 1 && option != 9) {
-                    System.out.println("Você inseriu uma opção invalida, por favor verifique a opção.");
                     scanner.nextLine();
                     clearConsole();
                 }
@@ -109,14 +111,93 @@ public class Main {
                     
                     case 2:
                         clearConsole();
-                        System.out.println("#---- Listagem de clientes cadastrados ----#");
-                        for(Cliente cliente : listaClientes){
-                            cliente.imprimirCliente();
+                        
+                        // Verifica se a lista esta vazia
+                        if (listaClientes.isEmpty()) {
+                            System.out.println("Nenhum cliente cadastrado.");
+                        } else {
+                            for (Cliente cliente : listaClientes) {
+                                cliente.imprimirCliente();
+                            }
                         }
 
                         System.out.println("#---- Pressione ENTER para voltar ao Menu ----#");
                         scanner.nextLine();
                         break;
+
+                    case 3:
+                        clearConsole();
+                        boolean idEncontrado = false;
+                        Cliente clienteEncontrado = null;
+                        int idEditar = 0;
+                        System.out.println("#---- Atualização de clientes ----#");
+                        
+                        // Verifica se a lista esta vazia
+                        if (listaClientes.isEmpty()) {
+                            System.out.println("Nenhum cliente cadastrado.");
+                            System.out.println("#---- Pressione ENTER para voltar ao Menu ----#");
+                            scanner.nextLine();
+                        } else {
+                            do{
+                                try {
+                                    // Solicita os dados
+                                    System.out.println("Informe o ID do cliente que você deseja editar: ");
+                                    idEditar =  scanner.nextInt();
+                                    scanner.nextLine();
+    
+                                    // Verifica se o Id esta cadastrado
+                                    for(Cliente cliente : listaClientes) {
+                                        if(cliente.getId() == idEditar) {
+                                            idEncontrado = true;
+                                            clienteEncontrado = cliente;
+                                        }
+                                    }
+    
+                                    if(idEncontrado == false) {
+                                        System.out.printf("Cliente com o Id %d nao encontrado. Insira um novo Id \n", idEditar);
+                                    }
+    
+                                } catch (InputMismatchException e) {
+                                    System.out.println("Caracter invalido, por favor clique ENTER e insira um numero");
+                                    scanner.nextLine();
+                                }
+    
+    
+                            }while(idEncontrado == false);
+    
+                            clearConsole();
+                            System.out.println("#---- Atualização de clientes ----#");
+                            System.out.println("Cliente encontrado: ");
+                            clienteEncontrado.imprimirCliente();
+                            System.out.printf("Insira os novos dados para o cliente com Id %d ", idEditar);
+                            
+                            System.out.print("Digite o novo nome (ou deixe em branco para manter o atual): ");
+                            String novoNome = scanner.nextLine();
+                            if (!novoNome.isEmpty()) {
+                                clienteEncontrado.setNome(novoNome);
+                            }
+    
+                            System.out.print("Digite o novo email (ou deixe em branco para manter o atual): ");
+                            String novoEmail = scanner.nextLine();
+                            if (!novoEmail.isEmpty()) {
+                                clienteEncontrado.setEmail(novoEmail);
+                            }
+    
+                            System.out.print("Digite o novo telefone (ou deixe em branco para manter o atual): ");
+                            String novoTelefone = scanner.nextLine();
+                            if (!novoTelefone.isEmpty()) {
+                                clienteEncontrado.setTelefone(novoTelefone);
+                            }
+    
+    
+                            System.out.println("Dados do cliente atualizados com sucesso!");
+                            clienteEncontrado.imprimirCliente();
+                            System.out.println("Pressione ENTER para continuar...");
+                            scanner.nextLine();
+    
+                            break;
+                        }
+
 
                     
                 
@@ -124,16 +205,11 @@ public class Main {
                         break;
                 }
 
-
-
-
             }while(option >= 5 && option >= 1 && option != 9);
             
-
-
         }while(option != 9);
         
-
+        scanner.close(); // Fecha o Scanner
 
     }
 
