@@ -188,18 +188,68 @@ public class Main {
                             if (!novoTelefone.isEmpty()) {
                                 clienteEncontrado.setTelefone(novoTelefone);
                             }
-    
-    
+     
                             System.out.println("Dados do cliente atualizados com sucesso!");
                             clienteEncontrado.imprimirCliente();
                             System.out.println("Pressione ENTER para continuar...");
                             scanner.nextLine();
-    
-                            break;
+
                         }
 
+                        idEncontrado = false;
+                        clienteEncontrado = null;
+                        idEditar = 0;
 
-                    
+                        break;
+                    case 4:
+
+                        clearConsole();
+                        boolean idEncontradoExclusao = false;
+                        Cliente clienteParaExclusao = null;
+                        int idExcluir = 0;
+                        System.out.println("#---- Exclusão de clientes ----#");
+                        
+                        // Verifica se a lista esta vazia
+                        if (listaClientes.isEmpty()) {
+                            System.out.println("Nenhum cliente cadastrado.");
+                            System.out.println("#---- Pressione ENTER para voltar ao Menu ----#");
+                            scanner.nextLine();
+                        } else {
+                            do{
+                                try {
+                                    // Solicita os dados
+                                    System.out.println("Informe o ID do cliente que você deseja excluir: ");
+                                    idExcluir =  scanner.nextInt();
+                                    scanner.nextLine();
+    
+                                    // Verifica se o Id esta cadastrado
+                                    for(Cliente cliente : listaClientes) {
+                                        if(cliente.getId() == idExcluir) {
+                                            idEncontradoExclusao = true;
+                                            clienteParaExclusao = cliente;
+                                        }
+                                    }
+    
+                                    if(idEncontradoExclusao == false) {
+                                        System.out.printf("Cliente com o Id %d nao encontrado. Insira um novo Id \n", idExcluir);
+                                    }
+    
+                                } catch (InputMismatchException e) {
+                                    System.out.println("Caracter invalido, por favor clique ENTER e insira um numero");
+                                    scanner.nextLine();
+                                }
+    
+                            }while(idEncontradoExclusao == false);
+                            
+                            clienteParaExclusao.imprimirCliente();
+                            listaClientes.remove(clienteParaExclusao);
+                            System.out.println("Cliente com id " + idExcluir + " excluído com sucesso.");
+                            System.out.println("#---- Pressione ENTER para voltar ao Menu ----#");
+                            scanner.nextLine();
+
+                        }
+
+                            break;
                 
                     default:
                         break;
