@@ -11,7 +11,7 @@ import java.util.Scanner;
  */
 
 
- class Cliente {
+class Cliente {
 
     private int id;
     private String nome;
